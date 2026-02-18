@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllPosts, getPostBySlug } from '../../lib/content';
+
+export function getStaticPaths() {
+  const posts = getAllPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const post = getPostBySlug(slug!);
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+
+const date = post.publishedAt
+  ? new Date(post.publishedAt).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : null;
+---
+
+<BaseLayout title={post.title} description={post.excerpt}>
+  <article data-pagefind-body>
+    <header class="mb-10">
+      <h1 class="text-3xl sm:text-4xl font-serif font-bold mb-3">{post.title}</h1>
+      {date && (
+        <time datetime={post.publishedAt} class="text-sm text-stone-400 dark:text-stone-500">
+          {date}
+        </time>
+      )}
+    </header>
+
+    <div class="prose" set:html={post.html} />
+  </article>
+
+  <div class="mt-14 pt-8 border-t border-stone-200 dark:border-stone-800">
+    <a href="/writing" class="text-sm text-stone-400 dark:text-stone-500 hover:text-accent dark:hover:text-accent-dark">
+      &larr; Back to writing
+    </a>
+  </div>
+</BaseLayout>

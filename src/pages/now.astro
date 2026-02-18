@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPageBySlug } from '../lib/content';
+
+const page = getPageBySlug('now');
+
+const lastUpdated = page?.lastUpdated
+  ? new Date(page.lastUpdated).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : null;
+---
+
+<BaseLayout title="Now" description="What I'm currently working on and interested in.">
+  <article data-pagefind-body>
+    <h1 class="text-3xl font-bold mb-2">Now</h1>
+    {lastUpdated && (
+      <p class="text-sm text-gray-500 dark:text-gray-400 mb-8">
+        Last updated: {lastUpdated}
+      </p>
+    )}
+
+    {page ? (
+      <div class="prose" set:html={page.html} />
+    ) : (
+      <div class="prose">
+        <p class="text-gray-500 dark:text-gray-400">
+          This is a <a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer">/now page</a>.
+          Add a <code>content/pages/now.md</code> file to populate this.
+        </p>
+      </div>
+    )}
+  </article>
+</BaseLayout>

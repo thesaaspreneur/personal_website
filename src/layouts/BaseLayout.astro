@@ -1,0 +1,105 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  wide?: boolean;
+  hideFooter?: boolean;
+}
+
+const {
+  title,
+  description = 'Personal website of Rahul — writing about startups, cinema, poetry, philosophy, and more.',
+  ogImage,
+  wide = false,
+  hideFooter = false,
+} = Astro.props;
+
+const siteTitle = "Rahul";
+const fullTitle = title === siteTitle ? title : `${title} — ${siteTitle}`;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- RSS -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={siteTitle}
+      href="/rss.xml"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Dark mode: prevent flash -->
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col antialiased">
+    <div class="sunlight" aria-hidden="true"></div>
+    <Header />
+    <main class:list={['flex-1 w-full animate-fade-in', wide ? '' : 'max-w-2xl mx-auto px-5 sm:px-8 py-10 sm:py-16']}>
+      <slot />
+    </main>
+    {!hideFooter && <Footer />}
+
+    <!-- Sunlight parallax -->
+    <script is:inline>
+      (function() {
+        var el = document.querySelector('.sunlight');
+        if (!el) return;
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+          if (!ticking) {
+            requestAnimationFrame(function() {
+              el.style.transform = 'translateY(' + (window.scrollY * 0.12) + 'px)';
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }, { passive: true });
+      })();
+    </script>
+  </body>
+</html>

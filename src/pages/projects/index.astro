@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllProjects } from '../../lib/content';
+
+const projects = getAllProjects();
+---
+
+<BaseLayout title="Projects" description="Things I'm building, have built, or helped build.">
+  <section>
+    <h1 class="text-4xl sm:text-5xl font-serif font-bold mb-14">Projects</h1>
+
+    {projects.length > 0 ? (
+      <div class="space-y-10">
+        {projects.map((project) => {
+          const timeline = project.startYear
+            ? project.endYear
+              ? `${project.startYear} – ${project.endYear}`
+              : `${project.startYear} –`
+            : null;
+          const domain = project.url
+            ? project.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
+            : null;
+          return (
+            <div>
+              {/* Row 1: Title + Timeline */}
+              <div class="flex items-baseline justify-between gap-4">
+                <div class="flex items-baseline gap-3 min-w-0">
+                  {project.logo && (
+                    <img
+                      src={project.logo}
+                      alt=""
+                      class="w-5 h-5 rounded-sm shrink-0 relative top-[2px]"
+                    />
+                  )}
+                  <a
+                    href={`/projects/${project.slug}`}
+                    class="text-stone-800 dark:text-stone-200 font-serif font-semibold text-lg"
+                  >
+                    {project.title}
+                  </a>
+                </div>
+                <div class="flex items-baseline gap-3 shrink-0">
+                  {project.category && (
+                    <span class="text-xs font-mono text-stone-400 dark:text-stone-500 hidden sm:inline">
+                      {project.category.toLowerCase()}
+                    </span>
+                  )}
+                  {timeline && (
+                    <span class="text-sm font-mono text-stone-400 dark:text-stone-500 tabular-nums">
+                      {timeline}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Row 2: Description */}
+              {project.description && (
+                <p class="text-stone-500 dark:text-stone-400 mt-1.5 max-w-lg">
+                  {project.description}
+                </p>
+              )}
+
+              {/* Row 3: Links */}
+              {(domain || project.repoUrl) && (
+                <div class="flex gap-4 mt-2 text-sm">
+                  {domain && (
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-stone-400 dark:text-stone-500 hover:text-accent dark:hover:text-accent-dark"
+                    >
+                      {domain}
+                    </a>
+                  )}
+                  {project.repoUrl && (
+                    <a
+                      href={project.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-stone-400 dark:text-stone-500 hover:text-accent dark:hover:text-accent-dark"
+                    >
+                      github
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    ) : (
+      <p class="text-stone-400 dark:text-stone-500 py-8 text-center">
+        Nothing here yet.
+      </p>
+    )}
+  </section>
+</BaseLayout>

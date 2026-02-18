@@ -1,0 +1,69 @@
+{
+  "title": "My Story",
+  "description": "The story so far — how I got here and where I'm heading.",
+  "blocks": [
+    {
+      "type": "hero",
+      "headline": "What does it look like to build a life around curiosity?",
+      "subtitle": "a story in progress"
+    },
+    {
+      "type": "chapter",
+      "label": "The Beginning"
+    },
+    {
+      "type": "text",
+      "content": "I've always been the kind of person who can't pick just one thing. Cinema, philosophy, startups, poetry, history — my interests read like someone who could never decide on a major.\n\nBut somewhere along the way, I stopped seeing that as a weakness and started seeing it as the whole point."
+    },
+    {
+      "type": "image",
+      "src": "",
+      "alt": "Early days",
+      "caption": "Where it all started",
+      "layout": "wide"
+    },
+    {
+      "type": "text",
+      "content": "The first thing I built was terrible. It barely worked, the design was questionable at best, and exactly three people used it — two of whom were my parents.\n\nBut it taught me something that no book ever could: the gap between imagining something and making it real is where all the interesting stuff happens."
+    },
+    {
+      "type": "quote",
+      "content": "The best way to predict the future is to invent it.",
+      "attribution": "Alan Kay"
+    },
+    {
+      "type": "chapter",
+      "label": "Finding My Way"
+    },
+    {
+      "type": "text",
+      "content": "I started paying attention to the things that wouldn't leave me alone — the questions I'd keep coming back to at 2 AM, the problems that felt personal, the ideas that kept showing up in different forms across different domains.\n\nIt turns out that when you follow your genuine curiosity rather than what you think you *should* be interested in, things start to connect in unexpected ways."
+    },
+    {
+      "type": "image",
+      "src": "",
+      "alt": "The journey",
+      "caption": "Somewhere along the way",
+      "layout": "full"
+    },
+    {
+      "type": "text",
+      "content": "A film by Tarkovsky taught me about patience. A startup failure taught me about resilience. A poem by Rilke taught me about sitting with uncertainty. None of these lessons stayed in their lanes — they bled into everything."
+    },
+    {
+      "type": "chapter",
+      "label": "What's Next"
+    },
+    {
+      "type": "text",
+      "content": "I'm still figuring it out. That's the honest answer, and I've come to believe it's the only honest answer anyone ever has.\n\nThis website is part of that figuring out — a place to think in public, to build in the open, and to connect the dots between all the things that fascinate me.\n\nIf you've read this far, we probably have something in common."
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "text",
+      "content": "*Thank you for being here.*"
+    }
+  ]
+}

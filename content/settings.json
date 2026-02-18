@@ -1,0 +1,10 @@
+{
+  "title": "Rahul's Website",
+  "description": "Personal website — writing about startups, cinema, poetry, philosophy, and more.",
+  "bio": "I write about startups, cinema, poetry, philosophy, history, and whatever else catches my attention. Building things, reading widely, thinking out loud.",
+  "socialLinks": [
+    { "platform": "GitHub", "url": "https://github.com" },
+    { "platform": "Twitter", "url": "https://twitter.com" }
+  ],
+  "interests": ["Cinema", "Poetry", "Startups", "Philosophy", "History", "Open Source"]
+}

@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllProjects, getProjectBySlug } from '../../lib/content';
+
+export function getStaticPaths() {
+  const projects = getAllProjects();
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const project = getProjectBySlug(slug!);
+
+if (!project) {
+  return Astro.redirect('/404');
+}
+---
+
+<BaseLayout title={project.title} description={project.description}>
+  <article data-pagefind-body>
+    <header class="mb-10">
+      {project.category && (
+        <p class="text-xs font-mono uppercase tracking-wider text-stone-400 dark:text-stone-500 mb-3">
+          {project.category}
+        </p>
+      )}
+      <h1 class="text-3xl sm:text-4xl font-serif font-bold mb-3">{project.title}</h1>
+      {project.description && (
+        <p class="text-lg text-stone-500 dark:text-stone-400">{project.description}</p>
+      )}
+      {(project.url || project.repoUrl) && (
+        <div class="flex gap-4 mt-4 text-sm">
+          {project.url && (
+            <a href={project.url} target="_blank" rel="noopener noreferrer">
+              {project.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')} &rarr;
+            </a>
+          )}
+          {project.repoUrl && (
+            <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+              Source &rarr;
+            </a>
+          )}
+        </div>
+      )}
+    </header>
+
+    {project.html && <div class="prose" set:html={project.html} />}
+  </article>
+
+  <div class="mt-14 pt-8 border-t border-stone-200 dark:border-stone-800">
+    <a href="/projects" class="text-sm text-stone-400 dark:text-stone-500 hover:text-accent dark:hover:text-accent-dark">
+      &larr; Back to projects
+    </a>
+  </div>
+</BaseLayout>

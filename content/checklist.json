@@ -1,0 +1,43 @@
+{
+  "items": [
+    { "text": "Adopt a husky and live in a cold country for a while", "done": false, "category": "experiences" },
+    { "text": "Watch the northern lights", "done": false, "category": "experiences" },
+    { "text": "Visit every continent", "done": false, "category": "experiences" },
+    { "text": "Live in a different country for at least a year", "done": false, "category": "experiences" },
+    { "text": "Go on a solo road trip with no fixed plan", "done": false, "category": "experiences" },
+    { "text": "Scuba dive in a coral reef", "done": false, "category": "experiences" },
+    { "text": "Sleep under the stars in a desert", "done": false, "category": "experiences" },
+
+    { "text": "Become a product manager", "done": true, "category": "career" },
+    { "text": "Build a product that people actually want", "done": false, "category": "career" },
+    { "text": "Start a company", "done": false, "category": "career" },
+    { "text": "Invest in a company that changes an industry", "done": false, "category": "career" },
+    { "text": "Give a talk at a major conference", "done": false, "category": "career" },
+    { "text": "Mentor someone who goes on to do great things", "done": false, "category": "career" },
+    { "text": "Work on something used by millions of people", "done": false, "category": "career" },
+
+    { "text": "Perform a music gig in front of an audience", "done": false, "category": "creative" },
+    { "text": "Write a book", "done": false, "category": "creative" },
+    { "text": "Learn a musical instrument well enough to play for friends", "done": false, "category": "creative" },
+    { "text": "Make a short film", "done": false, "category": "creative" },
+    { "text": "Create something that outlasts me", "done": false, "category": "creative" },
+    { "text": "Learn calligraphy", "done": false, "category": "creative" },
+    { "text": "Write a poem that moves a stranger", "done": false, "category": "creative" },
+
+    { "text": "Learn how to code", "done": true, "category": "knowledge" },
+    { "text": "Learn how to swim", "done": false, "category": "knowledge" },
+    { "text": "Become conversational in three languages", "done": false, "category": "knowledge" },
+    { "text": "Read 1000 books", "done": false, "category": "knowledge" },
+    { "text": "Understand quantum physics well enough to explain it simply", "done": false, "category": "knowledge" },
+    { "text": "Study philosophy formally", "done": false, "category": "knowledge" },
+    { "text": "Learn to cook one perfect dish from ten different cuisines", "done": false, "category": "knowledge" },
+
+    { "text": "Fall in love", "done": true, "category": "life" },
+    { "text": "Build a home that feels like a sanctuary", "done": false, "category": "life" },
+    { "text": "Cook a meal that makes someone cry happy tears", "done": false, "category": "life" },
+    { "text": "Run a marathon", "done": false, "category": "life" },
+    { "text": "Develop a meditation practice that sticks", "done": false, "category": "life" },
+    { "text": "Be at peace with who I am", "done": false, "category": "life" },
+    { "text": "Make a friend in a country I've never been to", "done": false, "category": "life" }
+  ]
+}

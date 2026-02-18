@@ -1,0 +1,51 @@
+---
+import type { Post } from '../lib/content';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+
+const date = post.publishedAt
+  ? new Date(post.publishedAt).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    })
+  : null;
+---
+
+<article class="group">
+  <a href={`/blog/${post.slug}`} class="block !bg-none">
+    <div class="py-4 -mx-3 px-3 rounded-lg transition-all duration-200 hover:bg-stone-100/60 dark:hover:bg-stone-800/40">
+      <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
+        <h3 class="text-base font-sans font-medium text-stone-800 dark:text-stone-200 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors">
+          {post.title}
+        </h3>
+        {date && (
+          <time
+            datetime={post.publishedAt}
+            class="text-sm font-mono text-stone-400 dark:text-stone-500 shrink-0"
+          >
+            {date}
+          </time>
+        )}
+      </div>
+      {post.excerpt && (
+        <p class="mt-1.5 text-sm text-stone-500 dark:text-stone-400 line-clamp-2">
+          {post.excerpt}
+        </p>
+      )}
+      {post.tags && post.tags.length > 0 && (
+        <div class="mt-2.5 flex flex-wrap gap-1.5">
+          {post.tags.map((tag) => (
+            <span class="text-xs px-2 py-0.5 rounded-full border border-stone-200 dark:border-stone-700 text-stone-500 dark:text-stone-400">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  </a>
+</article>

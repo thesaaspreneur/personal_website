@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getChecklist } from '../lib/content';
+
+const items = getChecklist();
+const doneCount = items.filter((i) => i.done).length;
+const totalCount = items.length;
+
+// Sort dots: done first for a visual "filling in" effect
+const dotsOrder = [...items].sort((a, b) => (b.done ? 1 : 0) - (a.done ? 1 : 0));
+
+// Group by category, preserving first-appearance order
+const categories: { name: string; items: typeof items }[] = [];
+const seen = new Set<string>();
+for (const item of items) {
+  if (!seen.has(item.category)) {
+    seen.add(item.category);
+    categories.push({ name: item.category, items: [] });
+  }
+  categories.find((c) => c.name === item.category)!.items.push(item);
+}
+---
+
+<BaseLayout title="Checklist" description="Things I'm going to do.">
+  <section data-pagefind-body>
+    <h1 class="text-4xl sm:text-5xl font-serif font-bold mb-10">Checklist</h1>
+
+    <!-- Dot grid -->
+    <div class="cl-dots" aria-hidden="true">
+      {dotsOrder.map((item) => (
+        <span class={item.done ? 'cl-dot cl-dot-done' : 'cl-dot'} />
+      ))}
+    </div>
+
+    <!-- Count -->
+    <p class="mt-4 text-xs font-mono text-stone-400 dark:text-stone-500 tracking-wide">
+      {doneCount} of {totalCount}
+    </p>
+
+    <!-- Categorized list -->
+    {categories.map((cat) => (
+      <div class="mt-12">
+        <h2 class="text-xs font-mono uppercase tracking-wider text-stone-400 dark:text-stone-500 mb-4">
+          {cat.name}
+        </h2>
+        <ul class="space-y-3">
+          {cat.items.map((item) => (
+            <li class={`cl-item ${item.done ? 'cl-item-done' : ''}`}>
+              <span class="cl-marker" aria-hidden="true">
+                <span class="cl-circle" />
+              </span>
+              <span class="cl-label">{item.text}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </section>
+</BaseLayout>

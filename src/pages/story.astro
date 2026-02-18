@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getStory } from '../lib/content';
+import { marked } from 'marked';
+
+const story = getStory();
+
+if (!story) {
+  return Astro.redirect('/404');
+}
+---
+
+<BaseLayout title={story.title} description={story.description} wide hideFooter>
+  <div class="story-container">
+    <div class="story-scroll" id="story">
+      {story.blocks.map((block) => {
+        switch (block.type) {
+          case 'hero':
+            return (
+              <section class="story-page">
+                <div class="sp-center">
+                  <h1 class="sp-hero-title">{block.headline}</h1>
+                  {block.subtitle && <p class="sp-hero-sub">{block.subtitle}</p>}
+                </div>
+              </section>
+            );
+
+          case 'chapter':
+            return (
+              <section class="story-page">
+                <div class="sp-center">
+                  <span class="sp-chapter">{block.label}</span>
+                </div>
+              </section>
+            );
+
+          case 'text':
+            return (
+              <section class="story-page">
+                <div class="sp-text" set:html={marked.parse(block.content || '')} />
+              </section>
+            );
+
+          case 'image':
+            return (
+              <section class="story-page">
+                <div class="sp-center">
+                  <figure class="sp-figure">
+                    {block.src ? (
+                      <img src={block.src} alt={block.alt || ''} loading="lazy" />
+                    ) : (
+                      <div class="sp-img-placeholder">
+                        <span>Your photo here</span>
+                      </div>
+                    )}
+                    {block.caption && <figcaption>{block.caption}</figcaption>}
+                  </figure>
+                </div>
+              </section>
+            );
+
+          case 'quote':
+            return (
+              <section class="story-page">
+                <div class="sp-center">
+                  <blockquote class="sp-quote">
+                    <p>{block.content}</p>
+                    {block.attribution && <cite>&mdash; {block.attribution}</cite>}
+                  </blockquote>
+                </div>
+              </section>
+            );
+
+          case 'divider':
+            return (
+              <section class="story-page">
+                <div class="sp-center">
+                  <span class="sp-ornament">&bull; &bull; &bull;</span>
+                </div>
+              </section>
+            );
+        }
+      })}
+    </div>
+  </div>
+
+  <script is:inline>
+    (function() {
+      var html = document.documentElement;
+      var body = document.body;
+      var header = document.querySelector('header');
+      var main = document.querySelector('main');
+      var container = document.querySelector('.story-container');
+      var scroller = document.getElementById('story');
+      var sun = document.querySelector('.sunlight');
+
+      if (!scroller || !container || !main) return;
+
+      // Hide sunlight on story page
+      if (sun) sun.style.display = 'none';
+
+      // Lock the viewport — no document-level scrolling
+      html.style.height = '100dvh';
+      html.style.overflow = 'hidden';
+      body.style.margin = '0';
+      body.style.height = '100dvh';
+      body.style.overflow = 'hidden';
+      body.classList.remove('min-h-screen');
+
+      // Remove animation transform (breaks height chain)
+      main.classList.remove('animate-fade-in');
+      main.style.overflow = 'hidden';
+
+      // Explicit pixel heights — don't rely on CSS percentage chain
+      function setHeights() {
+        var headerH = header ? header.offsetHeight : 0;
+        var available = window.innerHeight - headerH;
+        main.style.height = available + 'px';
+        container.style.height = available + 'px';
+        scroller.style.height = available + 'px';
+      }
+      setHeights();
+
+      // --- Wheel → horizontal scroll ---
+      // Key insight: scroll-snap-type: x mandatory fights incremental
+      // scrollLeft changes — the browser snaps back after each tiny move.
+      // Fix: disable snap during active scrolling, re-enable after a pause.
+      var snapTimer;
+      scroller.addEventListener('wheel', function(e) {
+        e.preventDefault();
+
+        // Disable snap while actively scrolling
+        scroller.style.scrollSnapType = 'none';
+
+        var delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+        scroller.scrollLeft += delta;
+
+        // Re-enable snap after scrolling stops (snaps to nearest page)
+        clearTimeout(snapTimer);
+        snapTimer = setTimeout(function() {
+          scroller.style.scrollSnapType = 'x mandatory';
+        }, 150);
+      }, { passive: false });
+
+      // Keyboard
+      document.addEventListener('keydown', function(e) {
+        var w = scroller.clientWidth;
+        var cur = Math.round(scroller.scrollLeft / w);
+        if (e.key === 'ArrowRight') { e.preventDefault(); scroller.scrollTo({ left: (cur + 1) * w, behavior: 'smooth' }); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); scroller.scrollTo({ left: Math.max(0, cur - 1) * w, behavior: 'smooth' }); }
+      });
+
+      // Recalculate on resize
+      window.addEventListener('resize', function() {
+        setHeights();
+        var w = scroller.clientWidth;
+        var cur = Math.round(scroller.scrollLeft / w);
+        scroller.scrollTo({ left: cur * w, behavior: 'auto' });
+      });
+    })();
+  </script>
+</BaseLayout>

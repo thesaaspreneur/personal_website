@@ -1,0 +1,44 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import SearchWidget from './SearchWidget.astro';
+
+const navLinks = [
+  { href: '/writing', label: 'Writing' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/story', label: 'Story' },
+  { href: '/now', label: 'Now' },
+  { href: '/checklist', label: 'Checklist' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="w-full border-b border-stone-200 dark:border-stone-800">
+  <nav class="max-w-2xl mx-auto px-5 sm:px-8 py-5 flex items-center justify-between gap-4">
+    <a
+      href="/"
+      class="text-xl font-serif font-bold text-stone-900 dark:text-stone-100 !bg-none"
+    >
+      Rahul
+    </a>
+
+    <div class="flex items-center gap-1 sm:gap-3">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'text-sm px-2 py-1 rounded-md transition-colors !bg-none',
+            currentPath.startsWith(link.href)
+              ? 'text-accent dark:text-accent-dark font-medium'
+              : 'text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+      <div class="w-px h-4 bg-stone-200 dark:bg-stone-700 mx-1 hidden sm:block"></div>
+      <SearchWidget />
+      <ThemeToggle />
+    </div>
+  </nav>
+</header>

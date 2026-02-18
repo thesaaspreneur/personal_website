@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLatestPosts } from '../lib/content';
+
+const latestPosts = getLatestPosts(5);
+---
+
+<BaseLayout title="Rahul" description="I build software. Software is the most honest art form we have.">
+  <!-- Hero -->
+  <section class="py-10 sm:py-16">
+    <p class="text-sm font-mono text-stone-400 dark:text-stone-500 mb-3 animate-fade-in" style="animation-delay: 0.1s">
+      hello humans/agents
+    </p>
+    <h1 class="text-4xl sm:text-5xl font-serif font-bold mb-3 animate-fade-in" style="animation-delay: 0.2s">
+      I'm Rahul.
+    </h1>
+    <p class="text-2xl sm:text-3xl font-serif text-stone-500 dark:text-stone-400 animate-fade-in" style="animation-delay: 0.3s">
+      I build software.
+    </p>
+    <div class="mt-8 w-12 h-px bg-stone-300 dark:bg-stone-700 animate-fade-in" style="animation-delay: 0.4s"></div>
+  </section>
+
+  <!-- Manifesto -->
+  <section class="mt-4 max-w-lg">
+    <div class="space-y-6 text-lg text-stone-600 dark:text-stone-400 leading-relaxed">
+      <p>
+        Software is the most honest art form we have. It demands truth. You can't fake your way to something that works. It takes a village, it takes craft, and it takes the kind of caring that most industries talk about but never deliver. I build software because I believe the way we build it is the way more of the world should work.
+      </p>
+      <p>
+        The world is a museum of passion projects. We need a hundred times more of them. I'm here to add mine.
+      </p>
+      <p>
+        Human knowledge is the longest-running, most ambitious project in history and nobody is close to finishing it. I want to spend my life pulling threads from every corner of it I can reach.
+      </p>
+    </div>
+  </section>
+
+  <!-- What I Do -->
+  <section class="mt-24">
+    <h2 class="text-lg font-serif font-semibold mb-8">What I do</h2>
+    <div class="space-y-8">
+      <div class="sm:grid sm:grid-cols-[7rem_1fr] sm:gap-x-6 sm:items-baseline">
+        <p class="text-xs font-mono uppercase tracking-wider text-stone-400 dark:text-stone-500 mb-1 sm:mb-0 leading-[1.7]">by day</p>
+        <p class="text-stone-700 dark:text-stone-300">
+          <strong>Platform PM at Enterpret.</strong> I work on the integration ecosystem and taxonomy system for a customer feedback intelligence platform serving teams at Canva, Notion and Perplexity.
+        </p>
+      </div>
+      <div class="sm:grid sm:grid-cols-[7rem_1fr] sm:gap-x-6 sm:items-baseline">
+        <p class="text-xs font-mono uppercase tracking-wider text-stone-400 dark:text-stone-500 mb-1 sm:mb-0 leading-[1.7]">investing</p>
+        <p class="text-stone-700 dark:text-stone-300">
+          <strong>Venture Fellow at Day Zero.</strong> Working with founders at the earliest inflection point of their journey. Pre-seed and seed.
+        </p>
+      </div>
+      <div class="sm:grid sm:grid-cols-[7rem_1fr] sm:gap-x-6 sm:items-baseline">
+        <p class="text-xs font-mono uppercase tracking-wider text-stone-400 dark:text-stone-500 mb-1 sm:mb-0 leading-[1.7]">building</p>
+        <p class="text-stone-700 dark:text-stone-300">
+          <strong>Advisor to Standout.</strong> An AI writing assistant that learns from how you actually work and talk, not how a chatbot thinks you should.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Writing -->
+  {latestPosts.length > 0 && (
+    <section class="mt-24">
+      <div class="flex items-baseline justify-between mb-6">
+        <h2 class="text-lg font-serif font-semibold">Writing</h2>
+        <a href="/writing" class="text-sm text-stone-400 dark:text-stone-500 hover:text-accent dark:hover:text-accent-dark">
+          View all &rarr;
+        </a>
+      </div>
+      <ul class="space-y-3">
+        {latestPosts.map((post) => {
+          const date = post.publishedAt
+            ? new Date(post.publishedAt).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              })
+            : null;
+          return (
+            <li class="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-3">
+              <span class="text-stone-300 dark:text-stone-600 hidden sm:inline select-none">&bull;</span>
+              <a href={`/writing/${post.slug}`} class="text-stone-800 dark:text-stone-200 font-medium">
+                {post.title}
+              </a>
+              {date && (
+                <span class="text-sm text-stone-400 dark:text-stone-500 shrink-0">
+                  {date}
+                </span>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  )}
+</BaseLayout>

@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:vivekkaushal.com)",
+      "WebFetch(domain:manassaloi.com)",
+      "WebFetch(domain:patrickcollison.com)",
+      "WebFetch(domain:paulgraham.com)",
+      "WebFetch(domain:sive.rs)",
+      "WebFetch(domain:www.benkuhn.net)",
+      "WebFetch(domain:rsms.me)",
+      "WebFetch(domain:tonsky.me)",
+      "WebFetch(domain:gwern.net)",
+      "WebFetch(domain:sahillavingia.com)",
+      "WebFetch(domain:jamesclear.com)",
+      "WebFetch(domain:zerodha.tech)",
+      "Bash(npm create astro:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "WebSearch",
+      "Bash(pkill:*)",
+      "Bash(npm uninstall:*)",
+      "WebFetch(domain:tina.io)",
+      "WebFetch(domain:amie.so)",
+      "Bash(npx astro build:*)",
+      "WebFetch(domain:daylightcomputer.com)",
+      "Bash(gh auth:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
