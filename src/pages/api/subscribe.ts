@@ -34,7 +34,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     // Origin check (CSRF protection)
     const origin = request.headers.get('origin');
     const allowedOrigins = [
-      'https://rahul.dev',
+      'https://rahul.wiki',
+      'https://www.rahul.wiki',
       'http://localhost:4321',
       'http://localhost:4322',
       'http://localhost:4323',
