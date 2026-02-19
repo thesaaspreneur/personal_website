@@ -62,7 +62,8 @@
       msg.classList.add('text-red-500');
       msg.classList.remove('text-accent', 'dark:text-accent-dark');
     } finally {
-      btn.disabled = false;
+      // Cooldown: keep button disabled for 5 seconds to prevent spam
+      setTimeout(() => { btn.disabled = false; }, 5000);
     }
   });
 </script>
