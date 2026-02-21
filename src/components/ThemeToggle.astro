@@ -41,7 +41,30 @@
 <script>
   const toggle = document.getElementById('theme-toggle');
   toggle?.addEventListener('click', () => {
-    const isDark = document.documentElement.classList.toggle('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    const html = document.documentElement;
+    const goingDark = !html.classList.contains('dark');
+
+    // Color wash
+    const sweep = document.createElement('div');
+    sweep.className = 'theme-sweep ' + (goingDark ? 'to-dark' : 'to-light');
+    document.body.appendChild(sweep);
+
+    // Celestial arc — track sweeps X (left→right), body arcs Y
+    const track = document.createElement('div');
+    track.className = 'celestial-track';
+    const cel = document.createElement('div');
+    cel.className = 'celestial-body ' + (goingDark ? 'celestial-moon' : 'celestial-sun');
+    track.appendChild(cel);
+    document.body.appendChild(track);
+
+    // Toggle immediately — no delays
+    html.classList.add('theme-transitioning');
+    html.classList.toggle('dark');
+    localStorage.setItem('theme', goingDark ? 'dark' : 'light');
+
+    // Cleanup
+    sweep.addEventListener('animationend', () => sweep.remove());
+    setTimeout(() => track.remove(), 2400);
+    setTimeout(() => html.classList.remove('theme-transitioning'), 2500);
   });
 </script>

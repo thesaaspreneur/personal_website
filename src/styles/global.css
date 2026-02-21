@@ -39,6 +39,129 @@
   }
 }
 
+/* ---- Day/Night transition ---- */
+
+/* Smooth color transitions when toggling theme */
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition:
+    background-color 1.2s ease,
+    color 1.2s ease,
+    border-color 1.2s ease,
+    fill 1.2s ease,
+    stroke 1.2s ease !important;
+}
+
+/* The sunlight glow crossfades between golden and silver */
+.theme-transitioning .sunlight {
+  transition: background 1.6s ease !important;
+}
+
+/* Color wash overlay */
+.theme-sweep {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+}
+
+/* Dawn: warm radial bloom from the right */
+.theme-sweep.to-light {
+  background: radial-gradient(
+    ellipse at 85% 60%,
+    rgba(245, 185, 90, 0.28) 0%,
+    rgba(245, 175, 70, 0.14) 30%,
+    rgba(245, 185, 90, 0.05) 55%,
+    transparent 80%
+  );
+  animation: wash-bloom 2s ease-in-out forwards;
+}
+
+/* Dusk: cool wash descending from above */
+.theme-sweep.to-dark {
+  background: radial-gradient(
+    ellipse at 50% 10%,
+    rgba(140, 165, 210, 0.20) 0%,
+    rgba(155, 180, 225, 0.10) 35%,
+    rgba(140, 165, 210, 0.03) 60%,
+    transparent 85%
+  );
+  animation: wash-bloom 2s ease-in-out forwards;
+}
+
+@keyframes wash-bloom {
+  0%   { opacity: 0; }
+  20%  { opacity: 1; }
+  65%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ---- Celestial body (sunrise / moonrise arc) ---- */
+/*
+  Smooth arc via two nested elements with independent axes:
+  - .celestial-track: horizontal sweep left → right (ease-in-out)
+  - .celestial-body: vertical arc rise → peak → gentle descent (ease-in-out)
+  Different easing on each axis composes into a natural curved path.
+*/
+
+.celestial-track {
+  position: fixed;
+  left: 3%;
+  top: 40%;
+  pointer-events: none;
+  z-index: 9999;
+  animation: arc-x 2.2s ease-in-out forwards;
+}
+
+.celestial-body {
+  will-change: transform, opacity;
+  animation: arc-y 2.2s ease-in-out forwards;
+}
+
+/* Sun: small golden disc with soft glow */
+.celestial-sun {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #e8a840;
+  box-shadow:
+    0 0 12px 4px rgba(245, 180, 70, 0.4),
+    0 0 30px 8px rgba(245, 180, 70, 0.15);
+}
+
+/* Moon: small silver crescent */
+.celestial-moon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  box-shadow:
+    0 0 10px 3px rgba(180, 200, 240, 0.35),
+    0 0 25px 6px rgba(180, 200, 240, 0.12);
+  background:
+    radial-gradient(circle at 4px 5px, transparent 5px, #c8d4e8 5.5px);
+}
+
+/* Horizontal: left edge → right edge */
+@keyframes arc-x {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(90vw); }
+}
+
+/* Vertical: rise to peak above content, then gentle descent toward upper-right */
+@keyframes arc-y {
+  0%   { transform: translateY(0); opacity: 0; }
+  10%  { opacity: 1; }
+  50%  { transform: translateY(-30vh); }
+  90%  { opacity: 1; }
+  100% { transform: translateY(-22vh); opacity: 0; }
+}
+
 /* Ambient sunlight glow — light mode: warm golden wash */
 .sunlight {
   position: fixed;

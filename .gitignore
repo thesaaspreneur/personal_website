@@ -32,3 +32,4 @@ tina/__generated__/
 
 # Editor
 .vscode/
+.vercel
