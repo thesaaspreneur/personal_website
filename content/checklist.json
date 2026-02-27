@@ -21,6 +21,9 @@
     { "text": "Learn a musical instrument well enough to play for friends", "done": false, "category": "creative" },
     { "text": "Make a short film", "done": false, "category": "creative" },
     { "text": "Create something that outlasts me", "done": false, "category": "creative" },
+    { "text": "Build a fantasy world", "done": false, "category": "creative" },
+    { "text": "Design a city", "done": false, "category": "creative" },
+    { "text": "Write a popular song", "done": false, "category": "creative" },
     { "text": "Learn calligraphy", "done": false, "category": "creative" },
     { "text": "Write a poem that moves a stranger", "done": false, "category": "creative" },
 
@@ -29,6 +32,8 @@
     { "text": "Become conversational in three languages", "done": false, "category": "knowledge" },
     { "text": "Read 1000 books", "done": false, "category": "knowledge" },
     { "text": "Understand quantum physics well enough to explain it simply", "done": false, "category": "knowledge" },
+    { "text": "Learn Punjabi", "done": false, "category": "knowledge" },
+    { "text": "Get really good at chess", "done": false, "category": "knowledge" },
     { "text": "Study philosophy formally", "done": false, "category": "knowledge" },
     { "text": "Learn to cook one perfect dish from ten different cuisines", "done": false, "category": "knowledge" },
 
