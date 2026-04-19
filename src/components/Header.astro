@@ -22,7 +22,8 @@ const currentPath = Astro.url.pathname;
       Rahul
     </a>
 
-    <div class="flex items-center gap-1 sm:gap-3">
+    <!-- Desktop nav -->
+    <div class="hidden sm:flex items-center gap-3">
       {navLinks.map((link) => (
         <a
           href={link.href}
@@ -36,9 +37,66 @@ const currentPath = Astro.url.pathname;
           {link.label}
         </a>
       ))}
-      <div class="w-px h-4 bg-stone-200 dark:bg-stone-700 mx-1 hidden sm:block"></div>
+      <div class="w-px h-4 bg-stone-200 dark:bg-stone-700 mx-1"></div>
       <SearchWidget />
       <ThemeToggle />
     </div>
+
+    <!-- Mobile nav controls -->
+    <div class="flex items-center gap-1 sm:hidden">
+      <SearchWidget />
+      <ThemeToggle />
+      <button
+        id="menu-toggle"
+        type="button"
+        aria-label="Open menu"
+        class="p-2 rounded-md text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+      >
+        <!-- Hamburger icon -->
+        <svg id="menu-icon-open" class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+        </svg>
+        <!-- Close icon -->
+        <svg id="menu-icon-close" class="w-[18px] h-[18px] hidden" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
   </nav>
+
+  <!-- Mobile menu panel -->
+  <div id="mobile-menu" class="hidden sm:hidden border-t border-stone-200 dark:border-stone-800">
+    <div class="max-w-2xl mx-auto px-5 py-4 flex flex-col gap-1">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'text-sm px-3 py-2.5 rounded-md transition-colors !bg-none',
+            currentPath.startsWith(link.href)
+              ? 'text-accent dark:text-accent-dark font-medium'
+              : 'text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
 </header>
+
+<script is:inline>
+  (function() {
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+
+    toggle?.addEventListener('click', () => {
+      const isOpen = !menu?.classList.contains('hidden');
+      menu?.classList.toggle('hidden');
+      iconOpen?.classList.toggle('hidden');
+      iconClose?.classList.toggle('hidden');
+      toggle.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
+    });
+  })();
+</script>
