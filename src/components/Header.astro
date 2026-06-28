@@ -4,8 +4,8 @@ import SearchWidget from './SearchWidget.astro';
 
 const navLinks = [
   { href: '/writing', label: 'Writing' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/story', label: 'Story' },
+  { href: '/projects', label: 'Projects', wip: true },
+  { href: '/story', label: 'Story', wip: true },
   { href: '/now', label: 'Now' },
   { href: '/checklist', label: 'Checklist' },
 ];
@@ -35,6 +35,9 @@ const currentPath = Astro.url.pathname;
           ]}
         >
           {link.label}
+          {link.wip && (
+            <span class="ml-1 text-[9px] font-mono uppercase tracking-wider text-stone-400 dark:text-stone-500 align-top">wip</span>
+          )}
         </a>
       ))}
       <div class="w-px h-4 bg-stone-200 dark:bg-stone-700 mx-1"></div>
@@ -78,6 +81,9 @@ const currentPath = Astro.url.pathname;
           ]}
         >
           {link.label}
+          {link.wip && (
+            <span class="ml-1 text-[9px] font-mono uppercase tracking-wider text-stone-400 dark:text-stone-500 align-top">wip</span>
+          )}
         </a>
       ))}
     </div>
